@@ -7,16 +7,13 @@ int main()
 {
     srand(time(NULL));
 
-    int mass[50];
-    for (int i = 0; i < 50; i++)
-        mass[i] = rand() % 2;
 
     int count_1 = 0;
-    for (int i : mass) {
-        count_1 += i;
+    for (int i = 0; i < 50; i++) {
+        int x = rand() % 2;
+        count_1 += x;
+        cout << x << " ";
     }
-
-    for (int i : mass) cout << i << " ";
     cout << "\n";
 
 
@@ -25,4 +22,3 @@ int main()
     return 0;
 
 }
-
