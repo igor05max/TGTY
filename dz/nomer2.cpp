@@ -1,24 +1,40 @@
 #include <iostream>
-#include <ctime>
 
 using namespace std;
 
-int main()
-{
-    srand(time(NULL));
+/*
+ Задание 2
+*/
+int main() {
 
-
-    int count_1 = 0;
-    for (int i = 0; i < 50; i++) {
-        int x = rand() % 2;
-        count_1 += x;
-        cout << x << " ";
+    setlocale(LC_ALL, "Russian");
+    
+    // a)
+    cout << "a)" << endl;
+    double territory = 100, profit = 20;
+    for (int i = 2; i <= 8; ++i) {
+        profit *= 1.02;
+        cout << "урожайность за " << i << " год = " << profit << endl;
     }
-    cout << "\n";
 
+    // б)
+    cout << "б)" << endl;
+    for (int i = 2; i <= 7; ++i) {
+        territory *= 1.05;
+        if (i >= 4)
+            cout << "площадь участка за " << i << " год = " << territory << endl;
+    }
 
-    cout << "count 1: " << count_1 << "\n" << "count 0: " << 50 - count_1;
+    // в) 
+    cout << "в)" << endl;
+    territory = 100, profit = 20;
+    double summ = profit * territory;
+    for (int i = 2; i <= 6; ++i) {
+        profit *= 1.02;
+        territory *= 1.05;
+        summ += profit * territory;
+    }
+    cout << "урожай за первые шесть лет: " << summ << endl;
 
     return 0;
-
 }
