@@ -1,29 +1,29 @@
 #include <iostream>
-#include <ctime>
-
 using namespace std;
 
-int main()
-{
-    srand(time(NULL));
+/*
+ Задание 1
+*/
+int main() {
 
-    int n = rand() % 20 + 1;
-    int m = rand() % 20 + 1;
-
-    cout << "n: " << n << " m: " << m << "\n";
-
-    int a, b;
-    cin >> a >> b;
-
-    for (int i = 0; i < n; i++)
-        cout << rand() % (b - a + 1) + a << " ";
-    cout << "\n";
-
-    for (int i = 0; i < m; i++) {
-        cout << (rand() % (n * 1000 + 1)) * 0.001 << " ";
+    setlocale(LC_ALL, "Russian");
+    // a)
+    cout << "a)" << endl;
+    double summ = 1000;
+    for (int i = 1; i <= 10; ++i) {
+        double res = summ * .02;
+        cout << "прирост за " << i << " месяц " << res << endl;
+        summ += res;
     }
 
+    // б)
+    cout << "б)" << endl;
+    summ = 1000;
+    for (int i = 1; i <= 10; ++i) {
+        summ *= 1.02;
+        cout << "сумма вклада через " << i << " мес. " << summ << endl;
+    }
+    
+
     return 0;
-
 }
-
