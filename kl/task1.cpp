@@ -16,7 +16,7 @@ void task() {
 	}
 
 	for (int i = 0; i < n / 2; ++i)
-		swap(mass[i], mass[n - i - 1]);
+		swap(mass[i], mass[i + n / 2]);
 
 	for (int i = 0; i < n; ++i)
 		cout << mass[i] << " ";
