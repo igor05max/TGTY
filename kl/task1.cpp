@@ -39,7 +39,7 @@ void task2() {
 	}
 	for (int i = 0; i < n; ++i) {
 		if (mass[i] % 2 == 1) {
-			cout << i;
+			cout << i + 1;
 			return;
 		}
 	}
