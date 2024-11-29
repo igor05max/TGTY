@@ -1,99 +1,138 @@
 #include <iostream>
+#include <string>
+#include <map>
+#include <fstream>
+#include <istream>
 #include <vector>
-#include <ctime>
+
 
 using namespace std;
 
 
-void new_list(vector<vector<int>> &mass, int n, int m) {
-	for (int i = 0; i < n; ++i) {
-		for (int j = 0; j < m; ++j) {
-			mass[i][j] = rand() % 10 + 1;
-		}
-	}
-
-}
-
-
-void print(vector<vector<int>> mass) {
-	for (int i = 0; i < mass.size(); ++i) {
-		for (int j = 0; j < mass[0].size(); ++j) {
-			cout << mass[i][j] << "\t";
-		}
-		cout << endl;
-	}
+int findString(string &s, string x, bool index = false) {
+    if (s.length() < x.length()) return 0;
+    int res = 0;
+    int length_x = x.length();
+    for (int i = 0; i <= s.length() - length_x; i++) {
+        if (s[i] == x[0] && s.substr(i, length_x) == x) {
+            res++;
+            if (index) {
+                return i;
+            }
+        }
+    }
+    if (index) return -1;
+    return res;
 }
 
 
 void task() {
-	vector<vector<int>> mass(12, vector<int>(10));
-	new_list(mass, 12, 10);
-	for (int i = 1; i <= 12; ++i) {
-		for (int j = i * 10, jj = 0; j >= i * 10 - 9; --j, ++jj) {
-			mass[i - 1][jj] = j;
-		}	
-	}
-	print(mass);
+    int k;
+    cin >> k;
+    ifstream in("file.txt");
+    string word;
+    int num = 0;
+    while (in >> word) {
+        if (num == 0) cout << word << endl;
+        if (num == 4) cout << word << endl;
+        if (num == k - 1) cout << word << endl;
+        num++;
+    }
+    cout << word << endl;
+    in.close();
 }
 
 
-void task2() {
-	vector<vector<int>> mass(11, vector<int>(4));
-	new_list(mass, 11, 4);
-	print(mass);
 
-	int res = 0;
-	for (int i = 0; i < 4; ++i)
-		res += mass[4][i];
-	cout << res << endl;
+void task2() {
+    ifstream in("file.txt");
+    vector<string> text;
+    string word;
+    while (in >> word)
+        text.push_back(word);
+    in.close();
+    // a
+    int length_text = text.size();
+    if (length_text == 1 && text[0].length() >= 2) {
+        char a = text[0][0], b = text[0][1];
+        
+        if ('9' >= a && a >= '0' && '9' >= b && b >= '0') {
+            if ((int(b) - int('0')) % 2 == 0)
+                cout << "Yes" << endl;
+            else
+                cout << "No" << endl;
+        }
+        else
+            cout << "No" << endl;
+    }
+    else if (length_text >= 2) {
+        string s = text[0] + text[1];
+        char a = s[0], b = s[1];
+        
+        if ('9' >= a && a >= '0' && '9' >= b && b >= '0') {
+            if ((int(b) - int('0')) % 2 == 0)
+                cout << "Yes" << endl;
+            else
+                cout << "No" << endl;
+        }
+        else
+            cout << "No" << endl;
+    }
+    else {
+        cout << "No" << endl;
+    }
+    // б 
+    int count = 0;
+    map<char, int> dict;
+    bool g = false;
+    int temp = 0, temp2 = 0;
+    for (string word : text) {
+        
+        
+        count += findString(word, "ен") + findString(word, "не");
+        if (findString(word, "ура")) g = true;
+        for (char alpha : word)
+            dict[alpha]++;
+    }
+    cout << "а: " << dict['а'] << " о: " << dict['о'] << " у: " << dict['у'] << endl;
+    // в
+    cout << count << endl;
+    // г 
+    if (g) cout << "YES";
+    else cout << "NO";
+    
 }
 
 
 void task3() {
-	vector<vector<int>> mass(10, vector<int>(10));
-	new_list(mass, 10, 10);
-	print(mass);
+    ifstream in;
+    in.open("file.txt");
 
-	int i_best = 0;
-	for (int i = 1; i < 10; ++i) {
-		if (mass[i][2] >= mass[i_best][2])
-			i_best = i;
-	}
-	cout << i_best + 1 << endl;
+    ofstream out;
+    out.open("file2.txt");
+
+    string word;
+    bool t = false;
+    int idx;
+    while (in >> word) {
+        if (!t) {
+
+            idx = findString(word, "о", true);
+            
+            if (idx > -1) {
+                word.erase(idx, 1);
+                t = !t;
+            }
+        }
+        out << word << endl;;
+    }
+    in.close();
+    out.close();  
 }
 
 
-void task4() {
-	vector<vector<int>> mass(10, vector<int>(10));
-	new_list(mass, 10, 10);
-	print(mass);
-	
-	int j_best = 10;
-	for (int i = 0; i < 10; ++i) {
-		int j_min = 0;
-		for (int j = 1; j < 10; ++j) {
-			if (mass[i][j] < mass[i][j_min])
-				j_min = j;
-		}
-		j_best = min(j_min, j_best);
-	}
-	cout << j_best + 1 << endl;
+int main() {
+    setlocale(LC_ALL, "rus");
 
-}
-
-
-int main()
-{
-	setlocale(LC_ALL, "rus");
-	srand(time(0));
-
-	//task();
-	//task2();
-	//task3();
-	task4();
-
-
-
-	return 0;
-
+    task3();
 }
