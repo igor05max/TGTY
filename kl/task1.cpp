@@ -10,164 +10,119 @@
 using namespace std;
 
 
-int findString(string& s, string x, bool index = false) {
-    if (s.length() < x.length()) return 0;
-    int res = 0;
-    int length_x = x.length();
-    for (int i = 0; i <= s.length() - length_x; i++) {
-        if (s[i] == x[0] && s.substr(i, length_x) == x) {
-            res++;
-            if (index) {
-                return i;
-            }
-        }
-    }
-    if (index) return -1;
-    return res;
-}
+/*
+Известна информация о 25 моментах времени одних и тех же суток: часы (значения от
+0 до 23) и минуты (от 0 до 59). Составить программу, сравнивающую два любых
+момента времени по их условному порядковому номеру (определяющую, какой из
+моментов был в эти сутки раньше).
+*/
 
 
 void task() {
-    int k;
-    cin >> k;
-    ifstream in("file.txt");
-    string word;
-    int num = 0;
-    while (in >> word) {
-        if (num == 0) cout << word << endl;
-        if (num == 4) cout << word << endl;
-        if (num == k - 1) cout << word << endl;
-        num++;
+    int time[25][2];
+    for (int i = 0; i < 25; i++) {
+        time[i][0] = rand() % 24;
+        time[i][1] = rand() % 60;
     }
-    cout << word << endl;
-    in.close();
-}
-
-
-
-void task2() {
-    ifstream in("file.txt");
-    vector<string> text;
-    string word;
-    while (in >> word)
-        text.push_back(word);
-    in.close();
-    // a
-    int length_text = text.size();
-    if (length_text == 1 && text[0].length() >= 2) {
-        char a = text[0][0], b = text[0][1];
-
-        if ('9' >= a && a >= '0' && '9' >= b && b >= '0') {
-            if ((int(b) - int('0')) % 2 == 0)
-                cout << "Yes" << endl;
-            else
-                cout << "No" << endl;
-        }
-        else
-            cout << "No" << endl;
-    }
-    else if (length_text >= 2) {
-        string s = text[0] + text[1];
-        char a = s[0], b = s[1];
-
-        if ('9' >= a && a >= '0' && '9' >= b && b >= '0') {
-            if ((int(b) - int('0')) % 2 == 0)
-                cout << "Yes" << endl;
-            else
-                cout << "No" << endl;
-        }
-        else
-            cout << "No" << endl;
-    }
-    else {
-        cout << "No" << endl;
-    }
-    // б 
-    int count = 0;
-    map<char, int> dict;
-    bool g = false;
-    int temp = 0, temp2 = 0;
-    for (string word : text) {
-
-
-        count += findString(word, "ен") + findString(word, "не");
-        if (findString(word, "ура")) g = true;
-        for (char alpha : word)
-            dict[alpha]++;
-    }
-    cout << "а: " << dict['а'] << " о: " << dict['о'] << " у: " << dict['у'] << endl;
-    // в
-    cout << count << endl;
-    // г 
-    if (g) cout << "YES";
-    else cout << "NO";
-
-}
-
-
-void task3() {
-    ifstream in;
-    in.open("file.txt");
-
-    ofstream out;
-    out.open("file2.txt");
-
-    string word;
-    bool t = false;
-    int idx;
-    while (in >> word) {
-        if (!t) {
-
-            idx = findString(word, "о", true);
-
-            if (idx > -1) {
-                word.erase(idx, 1);
-                t = !t;
-            }
-        }
-        out << word << endl;;
-    }
-    in.close();
-    out.close();
-}
-
-void task4() {
-    ifstream in;
-    in.open("file.txt");
-    ofstream out;
-    out.open("file2.txt");
-    ofstream out2;
-    out2.open("file3.txt");
-    string word;
-    while (in >> word) {
-        if (int(word[word.length() - 1] - '0') % 2 == 0)
-            out << word << " ";
-        else
-            out2 << word << " ";
-    }
-    in.close();
-    out.close();
-    out2.close();
-}
-
-void task5() {
-
-    vector<int> mass(10);
-    for (int i = 0; i < 10; i++) {
-        mass[i] = rand() % 20 + 1;
-        cout << mass[i] << " ";
+    for (int i = 0; i < 24; i++) {
+        cout << time[i][0] << ":" << time[i][1] << " ";
     }
     cout << endl;
+    int res[2] = { 24, 60 };
+    for (int i = 0; i < 25; i++) {
+        if (time[i][0] < res[0] || (time[i][0] == res[0] && time[i][1] < res[1])) {
+            res[0] = time[i][0];
+            res[1] = time[i][1];
+        }  
+    }
+    cout << res[0] << " : " << res[1] << endl;
+}
+/*
+Даны названия 20 стран и частей света, в которых они находятся. Определить, есть ли
+среди них страны, находящиеся в Африке или в Азии. В случае положительного ответа
+напечатать их названия.
 
-    ofstream out;
-    out.open("file2.txt");
-    for (int a : mass) {
-        out << a << endl;
+*/
+void task2() {
+    string list_land[20][2] = {
+        {"Россия", "Европа"},
+    {"Китай", "Азия"},
+    { "Индия", "Азия" },
+    {"США", "Северная Америка"},
+    {"Бразилия", "Южная Америка"},
+    {"Австралия", "Океания"},
+     { "Канада", "Северная Америка" },
+    { "Германия", "Европа" },
+     { "Франция", "Европа" },
+     {"Великобритания", "Европа"},
+    {"Южноафриканская Республика", "Африка"},
+    { "Япония", "Азия" },
+    {"Мексика",  "Северная Америка"},
+    {"Аргентина", "Южная Америка"},
+    {"Италия", "Европа"},
+    {"Испания", "Европа"},
+    {"Индонезия", "Азия"},
+    {"Нигерия", "Африка"},
+     { "Саудовская Аравия", "Азия" },
+    { "Египет", "Африка" }
+    };
+    for (int i = 0; i < 20; i++) {
+        if (list_land[i][1] == "Азия" || list_land[i][1] == "Африка") {
+            cout << list_land[i][0] << endl;
+        }
     }
 }
+/*
+В таблице должны быть напечатаны оценки каждого из 23 учеников класса по
+двенадцати предметам (в первом столбце — по первому предмету, во второй — по
+второму и т. д.). Названия предметов указаны в соответствующем столбце первой
+строки. Выяснилось, что в таблицу забыли записать оценки еще по одному предмету.
+Изменить таблицу так, чтобы в ней было название пропущенного предмета и оценки
+по нему, учитывая, что этот предмет в списке должен быть на k-м месте.
+*/
+
+void task3() {
+    vector<string> names = {
+        "Математика", "Русский язык", "Литература", "История", "География", "Биология", "Химия", "Физика", "Английский язык", "Искусство", "Физическая культура", "Информатика"
+    };
+    vector<vector<int>> mass(23, vector<int>(12, 0));
+    for (int i = 0; i < 23; i++) {
+        for (int j = 0; j < 12; j++) {
+            mass[i][j] = rand() % 4 + 2;
+        }
+    }
+    int k; cin >> k;
+    string name; cin >> name;
+    names.push_back(name);
+    vector<int> newMass(23);
+    for (int i = 0; i < 23; i ++)
+        mass[i].push_back(rand() % 4 + 2);
+
+    for (int i = 12; i > k; i--) {
+        swap(names[i], names[i - 1]);
+        /*for (int j = 0; j < 23; j++) {
+            swap(names[j][i], names[j][i - 1]);
+        }*/
+        for (int j = 0; j < 23; j++) {
+            swap(mass[j][i], mass[j][i - 1]);
+        }
+    }
+
+    for (int i = 0; i < 13; i++)
+        cout << names[i] << "\t";
+    for (int i = 0; i < 23; i++) {
+        for (int j = 0; j < 13; j++) {
+            cout << mass[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+
 
 int main() {
     setlocale(LC_ALL, "rus");
     srand(time(NULL));
-    task5();
+    task3();
 }
+
+
