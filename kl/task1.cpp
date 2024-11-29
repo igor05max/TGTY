@@ -4,12 +4,13 @@
 #include <fstream>
 #include <istream>
 #include <vector>
+#include <ctime>
 
 
 using namespace std;
 
 
-int findString(string &s, string x, bool index = false) {
+int findString(string& s, string x, bool index = false) {
     if (s.length() < x.length()) return 0;
     int res = 0;
     int length_x = x.length();
@@ -55,7 +56,7 @@ void task2() {
     int length_text = text.size();
     if (length_text == 1 && text[0].length() >= 2) {
         char a = text[0][0], b = text[0][1];
-        
+
         if ('9' >= a && a >= '0' && '9' >= b && b >= '0') {
             if ((int(b) - int('0')) % 2 == 0)
                 cout << "Yes" << endl;
@@ -68,7 +69,7 @@ void task2() {
     else if (length_text >= 2) {
         string s = text[0] + text[1];
         char a = s[0], b = s[1];
-        
+
         if ('9' >= a && a >= '0' && '9' >= b && b >= '0') {
             if ((int(b) - int('0')) % 2 == 0)
                 cout << "Yes" << endl;
@@ -87,8 +88,8 @@ void task2() {
     bool g = false;
     int temp = 0, temp2 = 0;
     for (string word : text) {
-        
-        
+
+
         count += findString(word, "ен") + findString(word, "не");
         if (findString(word, "ура")) g = true;
         for (char alpha : word)
@@ -100,7 +101,7 @@ void task2() {
     // г 
     if (g) cout << "YES";
     else cout << "NO";
-    
+
 }
 
 
@@ -118,7 +119,7 @@ void task3() {
         if (!t) {
 
             idx = findString(word, "о", true);
-            
+
             if (idx > -1) {
                 word.erase(idx, 1);
                 t = !t;
@@ -127,12 +128,46 @@ void task3() {
         out << word << endl;;
     }
     in.close();
-    out.close();  
+    out.close();
 }
 
+void task4() {
+    ifstream in;
+    in.open("file.txt");
+    ofstream out;
+    out.open("file2.txt");
+    ofstream out2;
+    out2.open("file3.txt");
+    string word;
+    while (in >> word) {
+        if (int(word[word.length() - 1] - '0') % 2 == 0)
+            out << word << " ";
+        else
+            out2 << word << " ";
+    }
+    in.close();
+    out.close();
+    out2.close();
+}
+
+void task5() {
+
+    vector<int> mass(10);
+    for (int i = 0; i < 10; i++) {
+        mass[i] = rand() % 20 + 1;
+        cout << mass[i] << " ";
+    }
+    cout << endl;
+
+    ofstream out;
+    out.open("file2.txt");
+    for (int a : mass) {
+        out << a << endl;
+    }
+}
 
 int main() {
     setlocale(LC_ALL, "rus");
-
-    task3();
+    srand(time(NULL));
+    task5();
 }
