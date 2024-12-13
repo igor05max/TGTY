@@ -44,7 +44,7 @@ void task1() {
 	int res = 0;
 	res += dest(a, b, c);
 	res += dest(b, a, c);
-	res += dest(c, b, b);
+	res += dest(c, a, b);
 	cout << res << endl;
 }
 
