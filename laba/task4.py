@@ -1,5 +1,5 @@
 def DelPrepinanie(line: str) -> str:
-    prepinanie = '''!()-[]{};:'",<>./?@#$%^&*_~\\'''
+    prepinanie = '''!()-[]{};:'",<>.?'''
     for char in prepinanie:
         line = line.replace(char, "")
     return line
