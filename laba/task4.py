@@ -6,5 +6,5 @@ def DelPrepinanie(line: str) -> str:
 
 
 line = input()
-print(DelPretinanie(line))
+print(DelPrepinanie(line))
 
