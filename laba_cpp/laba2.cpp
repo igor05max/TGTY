@@ -20,18 +20,54 @@ struct Smartphone {
 };
 
 
+void StartBase(vector<Smartphone>& phones) {
+    phones = {
+        {"Samsung", "Galaxy S21", "Android", "Phantom Black", 8, 128, 32799.99},
+        {"Apple", "iPhone 13", "iOS", "Midnight", 4, 128, 56999.99},
+        {"Samsung", "Galaxy A52", "Android", "Awesome Blue", 6, 128, 60349.99},
+        {"Xiaomi", "Redmi Note 10", "Android", "Onyx Gray", 4, 64, 40249.99},
+        {"Xiaomi", "Mi 11 Lite", "Android", "Mint Green", 6, 128, 30299.99}
+    };
+    cout << "создана стартовая база" << endl;
+
+}
+
+
+
 void addSmartphone(vector<Smartphone>& phones) {
     Smartphone phone;
+    string input;
+
+    cin.ignore();
+
     cout << "\nВведите данные смартфона:\n";
-    cout << "Бренд: "; cin >> phone.brand;
-    cout << "Модель: "; cin >> phone.model;
-    cout << "ОС (Android/iOS): "; cin >> phone.os_phone;
-    cout << "Цвет: "; cin >> phone.color;
-    cout << "ОЗУ (ГБ): "; cin >> phone.ram;
-    cout << "Память (ГБ): "; cin >> phone.storage;
-    cout << "Цена (руб): "; cin >> phone.price;
+
+    cout << "Бренд: ";
+    getline(cin, phone.brand);
+
+    cout << "\nМодель: ";
+    getline(cin, phone.model);
+
+    cout << "\nОС (Android/iOS): ";
+    getline(cin, phone.os_phone);
+
+    cout << "\nЦвет: ";
+    getline(cin, phone.color);
+
+    cout << "\nОЗУ (ГБ): ";
+    getline(cin, input);
+    phone.ram = stoi(input);
+
+    cout << "\nПамять (ГБ): ";
+    getline(cin, input);
+    phone.storage = stoi(input);
+
+    cout << "\nЦена (руб): ";
+    getline(cin, input);
+    phone.price = stod(input);
+
     phones.push_back(phone);
-    cout << "Смартфон добавлен!\n";
+    cout << "\nСмартфон добавлен!\n";
 }
 
 
@@ -42,11 +78,11 @@ void displaySmartphones(vector<Smartphone>& phones) {
     }
     cout << "\n=== Список смартфонов ===\n";
 
-    cout << "Бренд" << "\t" << "Модель" << "\t" << "ОС" << "\t" << "Цвет" << "\t" << "ОЗУ" << "\t" << "Память" << "\t" << "Цена" << endl;
+    cout << "Бренд" << "\t\t\t" << "Модель" << "\t\t\t\t" << "ОС" << "\t\t\t" << "Цвет" << "\t\t\t" << "ОЗУ" << "\t\t\t" << "Память" << "\t\t\t" << "Цена" << endl;
 
     for (Smartphone phone : phones) 
-        cout << phone.brand << "\t" << phone.model << "\t" << phone.os_phone << "\t" << phone.color << "\t" << phone.ram 
-            << "\t" << phone.storage << "\t" << phone.price << endl;
+        cout << phone.brand << "\t\t\t" << phone.model << "\t\t\t" << phone.os_phone << "\t\t\t" << phone.color << "\t\t" << phone.ram 
+            << "\t\t\t" << phone.storage << "\t\t\t" << phone.price << endl;
     
 }
 
@@ -201,6 +237,7 @@ int main() {
         cout << "5. Самый дорогой смартфон\n";
         cout << "6. Статистика по ОС\n";
         cout << "7. Средняя цена по брендам\n";
+        cout << "8. Стартовая база\n";
         cout << "0. Выход\n";
         cout << "Выберите действие: ";
         cin >> req;
@@ -212,6 +249,7 @@ int main() {
             case 5: findMostExpensive(phones); break;
             case 6: countByOS(phones); break;
             case 7: showBrandStats(phones); break;
+            case 8: StartBase(phones); break;
             case 0: cout << "Выход\n"; break;
         default: cout << "Неверный выбор!\n";
         }
