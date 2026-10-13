@@ -1,0 +1,17 @@
+fun main() {
+    val firstName = "Игорь"
+    val lastName = "Максимов"
+
+    println(firstName)
+    println(lastName)
+
+    var balance = 1000
+    balance += 500
+
+    println("Баланс: $balance")
+
+    var isLoggedIn = false
+    isLoggedIn = true
+
+    println("Авторизация: $isLoggedIn")
+}
